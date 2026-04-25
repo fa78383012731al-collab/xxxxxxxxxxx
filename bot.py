@@ -23,6 +23,9 @@ def run_flask():
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN غير موجود ❌")
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("البوت شغال ✅")
 
@@ -31,7 +34,7 @@ def run_bot():
     app.add_handler(CommandHandler("start", start))
 
     print("Bot is running...")
-    app.run_polling()
+    app.run_polling(close_loop=False)  # ✅ هذا هو الحل المهم
 
 # =========================
 # التشغيل
